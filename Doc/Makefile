@@ -1,15 +1,12 @@
-TBL=		tbl
 TROFF=		ditroff
 MS=		-ms
-FUNNYTAB=	$$HOME/lib/funnytab
-PREVIEW=	dpv -f $(FUNNYTAB)
-PSDIT=		psdit
+PREVIEW=	dpv
 
-tut:		tut.dit
-		$(PREVIEW) tut.dit
+intro:		intro.dit
+		$(PREVIEW) intro.dit
 
-mod:		mod.dit
-		$(PREVIEW) mod.dit
+modules:	modules.dit
+		$(PREVIEW) modules.dit
 
 paper:		paper.dit
 		$(PREVIEW) paper.dit
@@ -17,24 +14,16 @@ paper:		paper.dit
 ref:		ref.dit
 		$(PREVIEW) ref.dit
 
-ALL=		tut.dit mod.dit paper.dit ref.dit
+ALL=		intro.dit modules.dit paper.dit ref.dit
 
 all:		$(ALL)
 
 $(ALL):		macros.ms
 
 clean:
-		rm -f *.dit *.ps core @* ,* 
+		rm -f $(ALL)
 
-.SUFFIXES:	# Remove default suffixes
-
-.SUFFIXES:	.ms .dit .ps
+.SUFFIXES:	.ms .dit
 
 .ms.dit:
-		$(TBL) $*.ms | $(TROFF) $(MS) >$@
-
-.dit.ps:
-		$(PSDIT) <$*.dit >$@
-
-.ms.ps:
-		$(TBL) $*.ms | $(TROFF) $(MS) | $(PSDIT) >$@
+		$(TROFF) $(MS) $*.ms >$@
